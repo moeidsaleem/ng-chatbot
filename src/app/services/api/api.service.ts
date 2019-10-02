@@ -30,6 +30,10 @@ export class ApiService {
     return this.afs.doc('users/'+uid).update(data);
   }
 
+  async getUser(uid){
+    return this.afs.doc('users/'+uid).valueChanges();
+  }
+
   
 
 }

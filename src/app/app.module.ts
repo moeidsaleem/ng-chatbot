@@ -22,8 +22,6 @@ import { AuthModule } from './pages/auth/auth.module';
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
     DashboardModule,
     AuthModule,
     AngularFireModule.initializeApp(environment.firebase),

@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-  loginForm:FormGroup;
+  registerForm:FormGroup;
   constructor(private api:ApiService, private fb:FormBuilder,private router:Router) {
     this.createForm();
 
@@ -20,9 +20,13 @@ export class RegisterComponent implements OnInit {
 
 
    createForm() {
-    this.loginForm = this.fb.group({
+    this.registerForm = this.fb.group({
+      firstName:['Moeid', Validators.required],
+      lastName:['Saleem', Validators.required],
       email: ['moeidsaleem@gmail.com', Validators.email],
-      password: ['moeid123']
+      password: ['moeid123', Validators.required],
+      againPassword:['moeid123', Validators.required],
+      agreed:[true]
     });
   }
 
@@ -32,13 +36,26 @@ export class RegisterComponent implements OnInit {
     
   }
 
-async login(){
-if(this.loginForm.valid){
-  console.log('d',this.loginForm.value);
-  this.api.login(this.loginForm.value.email, this.loginForm.value.password)
+async register(){
+if(this.registerForm.valid){
+  if(this.registerForm.value.password !== this.registerForm.value.againPassword){
+    console.log('passwor dodnot match');
+    this.registerForm.get('password').reset();
+    this.registerForm.get('againPassword').reset()
+    return
+  }
+  console.log('d',this.registerForm.value);
+  this.api.register(this.registerForm.value.email, this.registerForm.value.password)
   .then(data=>{
 localStorage.setItem('uid', data.user.uid)
-this.router.navigate(['/dashboard'])
+this.api.createUser(data.user.uid ,{
+  uid:data.user.uid,
+  name:this.registerForm.value.firstName + ' ' + this.registerForm.value.lastName,
+  email: this.registerForm.value.email,
+  password: this.registerForm.value.password
+}).then(()=>{
+  this.router.navigate(['/dashboard'])
+}, err=>{console.log('err', err.message)})
   },err=>console.error('err', err.message))
 }else{
   console.log('not-a-valid-form')
