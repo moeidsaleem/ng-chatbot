@@ -8,19 +8,18 @@
                   <img alt="image" src="assets/img/users/user-1.png" class="rounded-circle author-box-picture">
                   <div class="clearfix"></div>
                   <div class="author-box-name">
-                    <a href="#">Sarah Smith</a>
+                    <a href="#">{{(auth.user | async)?.name}}</a>
                   </div>
-                  <div class="author-box-job">Web Developer</div>
+                  <div class="author-box-job">{{(auth.user | async)?.email}}</div>
                 </div>
                 <div class="text-center">
                   <div class="author-box-description">
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur voluptatum alias molestias
-                      minus quod dignissimos.
+                      {{(auth.user | async)?.bio}}
                     </p>
                   </div>
                   <div class="mb-2 mt-3">
-                    <div class="text-small font-weight-bold">Follow Hasan On</div>
+                    <div class="text-small font-weight-bold"></div>
                   </div>
                   <a href="#" class="btn btn-social-icon mr-1 btn-facebook">
                     <i class="fab fa-facebook-f"></i>
@@ -49,7 +48,7 @@
                       Birthday
                     </span>
                     <span class="float-right text-muted">
-                      30-05-1998
+                      {{(auth.user | async)?.dob}}
                     </span>
                   </p>
                   <p class="clearfix">
@@ -57,7 +56,7 @@
                       Phone
                     </span>
                     <span class="float-right text-muted">
-                      (0123)123456789
+                      {{(auth.user | async)?.phone}}
                     </span>
                   </p>
                   <p class="clearfix">
@@ -65,7 +64,7 @@
                       Mail
                     </span>
                     <span class="float-right text-muted">
-                      test@example.com
+                      {{(auth.user | async)?.email}}
                     </span>
                   </p>
                   <p class="clearfix">
@@ -73,7 +72,7 @@
                       Facebook
                     </span>
                     <span class="float-right text-muted">
-                      <a href="#">John Deo</a>
+                      <a href="#">{{(auth.user | async)?.handlers?.facebook}}</a>
                     </span>
                   </p>
                   <p class="clearfix">
@@ -81,7 +80,7 @@
                       Twitter
                     </span>
                     <span class="float-right text-muted">
-                      <a href="#">@johndeo</a>
+                      <a href="#">{{  (auth.user | async)?.handlers?.twitter}}</a>
                     </span>
                   </p>
                 </div>
@@ -144,22 +143,22 @@
                       <div class="col-md-3 col-6 b-r">
                         <strong>Full Name</strong>
                         <br>
-                        <p class="text-muted">Emily Smith</p>
+                        <p class="text-muted">{{(auth.user | async)?.name}}</p>
                       </div>
                       <div class="col-md-3 col-6 b-r">
                         <strong>Mobile</strong>
                         <br>
-                        <p class="text-muted">(123) 456 7890</p>
+                        <p class="text-muted">{{(auth.user | async)?.phone || 'not provided'}}</p>
                       </div>
                       <div class="col-md-3 col-6 b-r">
                         <strong>Email</strong>
                         <br>
-                        <p class="text-muted">johndeo@example.com</p>
+                        <p class="text-muted">{{(auth.user | async)?.email}}</p>
                       </div>
                       <div class="col-md-3 col-6">
                         <strong>Location</strong>
                         <br>
-                        <p class="text-muted">India</p>
+                        <p class="text-muted">{{(auth.user | async)?.location?.city}}</p>
                       </div>
                     </div>
                     <p class="m-t-30">Completed my graduation in Arts from the well known and
@@ -210,44 +209,44 @@
                     </ul>
                   </div>
                   <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="profile-tab2">
-                    <form method="post" class="needs-validation">
+                    <div class="needs-validation" *ngIf="user">
                       <div class="card-header">
                         <h4>Edit Profile</h4>
                       </div>
                       <div class="card-body">
                         <div class="row">
                           <div class="form-group col-md-6 col-12">
-                            <label>First Name</label>
-                            <input type="text" class="form-control" value="John">
+                            <label>Full Name</label>
+                            <input type="text" class="form-control" value="John" [(ngModel)]="user.name">
                             <div class="invalid-feedback">
                               Please fill in the first name
                             </div>
                           </div>
                           <div class="form-group col-md-6 col-12">
-                            <label>Last Name</label>
-                            <input type="text" class="form-control" value="Deo">
+                            <label>Password</label>
+                            <input type="text" class="form-control" value="Deo" disabled [(ngModel)]="user.password">
                             <div class="invalid-feedback">
-                              Please fill in the last name
+                              Please fill in the password
                             </div>
                           </div>
                         </div>
                         <div class="row">
                           <div class="form-group col-md-7 col-12">
                             <label>Email</label>
-                            <input type="email" class="form-control" value="test@example.com">
+                            <input type="email" class="form-control" value="test@example.com" [(ngModel)]="user.email">
                             <div class="invalid-feedback">
                               Please fill in the email
                             </div>
                           </div>
                           <div class="form-group col-md-5 col-12">
                             <label>Phone</label>
-                            <input type="tel" class="form-control" value="">
+                            <input type="tel" class="form-control" value="" [(ngModel)]="user.phone">
                           </div>
                         </div>
                         <div class="row">
                           <div class="form-group col-12">
                             <label>Bio</label>
-                            <textarea class="form-control summernote-simple" style="display: none;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur voluptatum alias molestias minus quod dignissimos.</textarea><div class="note-editor note-frame card"><div class="note-dropzone">  <div class="note-dropzone-message"></div></div><div class="note-toolbar-wrapper" style="height: 0px;"><div class="note-toolbar card-header" style="position: relative; top: 0px; width: 100%;"><div class="note-btn-group btn-group note-style"><button type="button" class="note-btn btn btn-light btn-sm note-btn-bold" tabindex="-1" title="" data-original-title="Bold (⌘+B)"><i class="note-icon-bold"></i></button><button type="button" class="note-btn btn btn-light btn-sm note-btn-italic" tabindex="-1" title="" data-original-title="Italic (⌘+I)"><i class="note-icon-italic"></i></button><button type="button" class="note-btn btn btn-light btn-sm note-btn-underline" tabindex="-1" title="" data-original-title="Underline (⌘+U)"><i class="note-icon-underline"></i></button><button type="button" class="note-btn btn btn-light btn-sm" tabindex="-1" title="" data-original-title="Remove Font Style (⌘+\)"><i class="note-icon-eraser"></i></button></div><div class="note-btn-group btn-group note-font"><button type="button" class="note-btn btn btn-light btn-sm note-btn-strikethrough" tabindex="-1" title="" data-original-title="Strikethrough (⌘+⇧+S)"><i class="note-icon-strikethrough"></i></button></div><div class="note-btn-group btn-group note-para"><div class="note-btn-group btn-group"><button type="button" class="note-btn btn btn-light btn-sm dropdown-toggle" tabindex="-1" data-toggle="dropdown" title="" data-original-title="Paragraph"><i class="note-icon-align-left"></i></button><div class="dropdown-menu"><div class="note-btn-group btn-group note-align"><button type="button" class="note-btn btn btn-light btn-sm" tabindex="-1" title="" data-original-title="Align left (⌘+⇧+L)"><i class="note-icon-align-left"></i></button><button type="button" class="note-btn btn btn-light btn-sm" tabindex="-1" title="" data-original-title="Align center (⌘+⇧+E)"><i class="note-icon-align-center"></i></button><button type="button" class="note-btn btn btn-light btn-sm" tabindex="-1" title="" data-original-title="Align right (⌘+⇧+R)"><i class="note-icon-align-right"></i></button><button type="button" class="note-btn btn btn-light btn-sm" tabindex="-1" title="" data-original-title="Justify full (⌘+⇧+J)"><i class="note-icon-align-justify"></i></button></div><div class="note-btn-group btn-group note-list"><button type="button" class="note-btn btn btn-light btn-sm" tabindex="-1" title="" data-original-title="Outdent (⌘+[)"><i class="note-icon-align-outdent"></i></button><button type="button" class="note-btn btn btn-light btn-sm" tabindex="-1" title="" data-original-title="Indent (⌘+])"><i class="note-icon-align-indent"></i></button></div></div></div></div></div></div><div class="note-editing-area"><div class="note-handle"><div class="note-control-selection"><div class="note-control-selection-bg"></div><div class="note-control-holder note-control-nw"></div><div class="note-control-holder note-control-ne"></div><div class="note-control-holder note-control-sw"></div><div class="note-control-sizing note-control-se"></div><div class="note-control-selection-info"></div></div></div><textarea class="note-codable"></textarea><div class="note-editable card-block" contenteditable="true" style="min-height: 150px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur voluptatum alias molestias minus quod dignissimos.</div></div><div class="note-statusbar">  <div class="note-resizebar">    <div class="note-icon-bar"></div>    <div class="note-icon-bar"></div>    <div class="note-icon-bar"></div>  </div></div></div>
+                            <textarea class="form-control summernote-simple" style="display: none;" [(ngModel)]="user.bio"></textarea><div class="note-editor note-frame card"><div class="note-dropzone">  <div class="note-dropzone-message"></div></div><div class="note-toolbar-wrapper" style="height: 0px;"><div class="note-toolbar card-header" style="position: relative; top: 0px; width: 100%;"><div class="note-btn-group btn-group note-style"><button type="button" class="note-btn btn btn-light btn-sm note-btn-bold" tabindex="-1" title="" data-original-title="Bold (⌘+B)"><i class="note-icon-bold"></i></button><button type="button" class="note-btn btn btn-light btn-sm note-btn-italic" tabindex="-1" title="" data-original-title="Italic (⌘+I)"><i class="note-icon-italic"></i></button><button type="button" class="note-btn btn btn-light btn-sm note-btn-underline" tabindex="-1" title="" data-original-title="Underline (⌘+U)"><i class="note-icon-underline"></i></button><button type="button" class="note-btn btn btn-light btn-sm" tabindex="-1" title="" data-original-title="Remove Font Style (⌘+\)"><i class="note-icon-eraser"></i></button></div><div class="note-btn-group btn-group note-font"><button type="button" class="note-btn btn btn-light btn-sm note-btn-strikethrough" tabindex="-1" title="" data-original-title="Strikethrough (⌘+⇧+S)"><i class="note-icon-strikethrough"></i></button></div><div class="note-btn-group btn-group note-para"><div class="note-btn-group btn-group"><button type="button" class="note-btn btn btn-light btn-sm dropdown-toggle" tabindex="-1" data-toggle="dropdown" title="" data-original-title="Paragraph"><i class="note-icon-align-left"></i></button><div class="dropdown-menu"><div class="note-btn-group btn-group note-align"><button type="button" class="note-btn btn btn-light btn-sm" tabindex="-1" title="" data-original-title="Align left (⌘+⇧+L)"><i class="note-icon-align-left"></i></button><button type="button" class="note-btn btn btn-light btn-sm" tabindex="-1" title="" data-original-title="Align center (⌘+⇧+E)"><i class="note-icon-align-center"></i></button><button type="button" class="note-btn btn btn-light btn-sm" tabindex="-1" title="" data-original-title="Align right (⌘+⇧+R)"><i class="note-icon-align-right"></i></button><button type="button" class="note-btn btn btn-light btn-sm" tabindex="-1" title="" data-original-title="Justify full (⌘+⇧+J)"><i class="note-icon-align-justify"></i></button></div><div class="note-btn-group btn-group note-list"><button type="button" class="note-btn btn btn-light btn-sm" tabindex="-1" title="" data-original-title="Outdent (⌘+[)"><i class="note-icon-align-outdent"></i></button><button type="button" class="note-btn btn btn-light btn-sm" tabindex="-1" title="" data-original-title="Indent (⌘+])"><i class="note-icon-align-indent"></i></button></div></div></div></div></div></div><div class="note-editing-area"><div class="note-handle"><div class="note-control-selection"><div class="note-control-selection-bg"></div><div class="note-control-holder note-control-nw"></div><div class="note-control-holder note-control-ne"></div><div class="note-control-holder note-control-sw"></div><div class="note-control-sizing note-control-se"></div><div class="note-control-selection-info"></div></div></div><textarea class="note-codable"></textarea><div class="note-editable card-block" contenteditable="true" style="min-height: 150px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur voluptatum alias molestias minus quod dignissimos.</div></div><div class="note-statusbar">  <div class="note-resizebar">    <div class="note-icon-bar"></div>    <div class="note-icon-bar"></div>    <div class="note-icon-bar"></div>  </div></div></div>
                           </div>
                         </div>
                         <div class="row">
@@ -265,7 +264,7 @@
                       <div class="card-footer text-right">
                         <button class="btn btn-primary">Save Changes</button>
                       </div>
-                    </form>
+                    </div>
                   </div>
                 </div>
               </div>

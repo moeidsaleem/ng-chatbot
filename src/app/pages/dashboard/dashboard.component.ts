@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,21 +9,19 @@ import { ApiService } from 'src/app/services/api/api.service';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private api:ApiService) { }
+  constructor(private api:ApiService,private auth:AuthService) { }
 
   user:any;
 
   ngOnInit() {
+    this.api.getUID();
     this.getUser()
   }
 
 
   async getUser(){
-    let user= await this.api.getUser(localStorage.getItem('uid'));
-    user.subscribe(resp=>{
-      console.log('response', resp);
-      this.user = resp;
-    });
+    let uid = await this.api.getUID();
+    this.user = this.auth.getUser()
 
   }
 

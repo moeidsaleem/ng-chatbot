@@ -3,6 +3,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -12,12 +13,9 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   registerForm:FormGroup;
-  constructor(private api:ApiService, private fb:FormBuilder,private router:Router) {
+  constructor(private api:ApiService,private auth:AuthService, private fb:FormBuilder,private router:Router) {
     this.createForm();
-
    }
-
-
 
    createForm() {
     this.registerForm = this.fb.group({
@@ -30,11 +28,7 @@ export class RegisterComponent implements OnInit {
     });
   }
 
- 
-
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
 async register(){
 if(this.registerForm.valid){
@@ -45,14 +39,22 @@ if(this.registerForm.valid){
     return
   }
   console.log('d',this.registerForm.value);
-  this.api.register(this.registerForm.value.email, this.registerForm.value.password)
+  this.auth.register(this.registerForm.value.email, this.registerForm.value.password)
   .then(data=>{
 localStorage.setItem('uid', data.user.uid)
 this.api.createUser(data.user.uid ,{
   uid:data.user.uid,
   name:this.registerForm.value.firstName + ' ' + this.registerForm.value.lastName,
   email: this.registerForm.value.email,
-  password: this.registerForm.value.password
+  password: this.registerForm.value.password,
+  bio:'',
+  dob:'',
+  phone:'',
+  handles:{
+    facebook:'',
+    twitter:'',
+    linkedin:''
+  }
 }).then(()=>{
   this.router.navigate(['/dashboard'])
 }, err=>{console.log('err', err.message)})

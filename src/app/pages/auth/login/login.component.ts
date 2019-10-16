@@ -3,6 +3,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   loginForm:FormGroup;
-  constructor(private api:ApiService, private fb:FormBuilder,private router:Router) {
+  constructor(private api:ApiService,private auth:AuthService, private fb:FormBuilder,private router:Router) {
     this.createForm();
 
    }
@@ -36,7 +37,7 @@ export class LoginComponent implements OnInit {
 async login(){
 if(this.loginForm.valid){
   console.log('d',this.loginForm.value);
-  this.api.login(this.loginForm.value.email, this.loginForm.value.password)
+  this.auth.login(this.loginForm.value.email, this.loginForm.value.password)
   .then(data=>{
 localStorage.setItem('uid', data.user.uid)
 this.router.navigate(['/dashboard'])

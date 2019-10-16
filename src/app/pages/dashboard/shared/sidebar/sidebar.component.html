@@ -10,7 +10,7 @@
         <img alt="image" [src]="'./assets/img/users/default-user.png'">
       </div>
       <div class="sidebar-user-details">
-        <div class="user-name">{{user?.name }}</div>
+        <div class="user-name">{{(authService.user | async)?.email }}</div>
         <div class="user-role">Welcome <b>{{user?.name}}</b> </div>
       </div>
     </div>

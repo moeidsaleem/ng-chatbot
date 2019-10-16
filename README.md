@@ -1,17 +1,45 @@
-# Final
+# Angular ChatBot 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.5.
+The Project involves a goal tracking web application done by a chatbot. 
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Technology 
+
+- Angular 8.3.5
+- Firebase Firestore + Authentication + Cloud Functions
+- Dialogflow
+- Ant Design System + Aegis Bootstrap 
+
+
+
+## Project MVC Architecture 
+
+The project structure involves 
+- Pages > All the routes are provided in the following folder.
+- - Dashboard > Contain all the dashboard based components. 
+- - - Shared >  contains the common components. 
+- - Auth > All authentication related modules.
+- - Landing > Contains the public pages for the user access. 
+
+- Services
+- - Api service > All API calls / Firebase callbacks are defined in the following. 
+- - Helper service > Contains all the helper function related to UI modal,etc. 
+
+- Intefaces
+- - user > User inteface containing all the properities of user. 
+
+
 
 
 #### Command to create a dashboard page 
-ng g m pages/auth/forgot-password -m pages/dashboard/dashboard.module --routing=true --flat=false --ro
-ute=home
 
-#### command to create auth 
+
+To generate components, Please use the following approach for generating lazy Loading module.
+``` ng g m pages/dashboard/<page-name> -m pages/dashboard/dashboard.module --routing=true --flat=false --ro
+ute=<page-name>
+```
+
+#### command to create authentication
 ng g m pages/auth/forgot-password -m pages/auth/auth.module --routing=true --flat=false --route=forgot-password
 
 ## Code scaffolding
@@ -32,4 +60,4 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 ## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+You can reach us out at Angular Kingdom

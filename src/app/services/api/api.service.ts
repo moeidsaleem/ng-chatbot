@@ -4,23 +4,12 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, from } from 'rxjs';
 
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor(private afs:AngularFirestore, private afAuth:AngularFireAuth) { }
-
-
-  /* User  */
-  async login(email, password){
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
-  }
-
-  async register(email, password){
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-  }
+  constructor(private afs:AngularFirestore, private afAuth:AngularFireAuth) {}
 
   async createUser(uid, data){
     return this.afs.doc('users/'+uid).set(data);
@@ -34,11 +23,8 @@ export class ApiService {
     return this.afs.doc('users/'+uid).valueChanges();
   }
 
-
   async getUID(){
     return from(localStorage.getItem('uid'));
-  
-
   }
   
 
