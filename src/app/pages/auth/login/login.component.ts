@@ -40,7 +40,7 @@ if(this.loginForm.valid){
   this.auth.login(this.loginForm.value.email, this.loginForm.value.password)
   .then(data=>{
 localStorage.setItem('uid', data.user.uid)
-this.router.navigate(['/dashboard'])
+this.router.navigate(['/dashboard/home'])
   },err=>console.error('err', err.message))
 }else{
   console.log('not-a-valid-form')

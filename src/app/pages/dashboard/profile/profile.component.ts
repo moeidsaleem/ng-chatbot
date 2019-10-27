@@ -9,12 +9,13 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private api:ApiService, private auth:AuthService) { }
+  constructor(private api:ApiService, public auth:AuthService) { }
 
   user={
     name:'',
     email:'',
     phone:'**********',
+    password:'',
     dob:'',
     bio:`lorem ipsum stuyislorem ipsum stuyis lorem ipsum stuyis lorem ipsum stuyis lorem ipsum stuyis lorem ipsum stuyis lorem ipsum stuyis  `,
     location:{}

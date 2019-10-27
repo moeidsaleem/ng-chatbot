@@ -28,4 +28,27 @@ export class ApiService {
   }
   
 
+
+  /* GOALS */
+  getGoals(uid){
+    return this.afs.collection('goals', ref=>ref.where('uid', '==',uid)).valueChanges();
+  }
+
+  getGoal(goalId){
+    return this.afs.doc('goals/'+goalId).valueChanges();
+  }
+
+  addGoal(goal){
+    return this.afs.collection('goals').add(goal);
+  }
+
+  deleteGoal(goalId){
+    return this.afs.doc('goals/'+goalId).delete()
+  }
+  updateGoal(goalId, goal){
+    return this.afs.doc('goals/'+goalId).update(goal);
+  }
+
+
+
 }
